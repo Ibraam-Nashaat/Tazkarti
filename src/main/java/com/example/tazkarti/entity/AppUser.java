@@ -1,5 +1,6 @@
 package com.example.tazkarti.entity;
 
+import com.example.tazkarti.enums.AccountStatus;
 import com.example.tazkarti.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -40,5 +41,5 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private boolean isApproved = false;
+    private String status = AccountStatus.PENDING.getDisplayName();
 }
