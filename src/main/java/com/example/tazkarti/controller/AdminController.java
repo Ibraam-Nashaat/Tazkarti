@@ -1,10 +1,8 @@
 package com.example.tazkarti.controller;
 
-import com.example.tazkarti.dto.AuthResponseDto;
-import com.example.tazkarti.dto.RemoveUserDto;
+import com.example.tazkarti.dto.TeamDto;
 import com.example.tazkarti.dto.UpdateUserAccountStatusDto;
-import com.example.tazkarti.dto.UserDto;
-import com.example.tazkarti.service.UserService;
+import com.example.tazkarti.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +13,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping({"/admins"})
 public class AdminController {
     @Autowired
-    private UserService userService;
-    @PutMapping("/{adminId}")
-    public ResponseEntity<String> updateUserAccountStatus(HttpServletRequest request, @Valid @RequestBody UpdateUserAccountStatusDto updateUserAccountStatusDto){
+    private AdminService adminService;
+    @PutMapping("/{adminId}/users/{userId}")
+    public ResponseEntity<String> updateUserAccountStatus(@PathVariable Long userId,HttpServletRequest request, @Valid @RequestBody UpdateUserAccountStatusDto updateUserAccountStatusDto){
         Long adminId = (Long)request.getAttribute("userId");
-        userService.updateAccountStatus(adminId, updateUserAccountStatusDto);
+        adminService.updateAccountStatus(adminId, updateUserAccountStatusDto,userId);
         return ResponseEntity.ok("User account status updated successfully");
     }
 
-    @DeleteMapping("/{adminId}")
-    public ResponseEntity<String> removeUser(HttpServletRequest request, @Valid @RequestBody RemoveUserDto removeUserDto){
+    @DeleteMapping("/{adminId}/users/{userId}")
+    public ResponseEntity<String> removeUser(@PathVariable Long userId,HttpServletRequest request){
         Long adminId = (Long)request.getAttribute("userId");
-        userService.removeUser(adminId,removeUserDto);
+        adminService.removeUser(adminId,userId);
         return ResponseEntity.ok("Removed user successfully");
+    }
+
+    @PostMapping("/{adminId}/teams")
+    public ResponseEntity<String> addTeam(HttpServletRequest request, @Valid @RequestBody TeamDto teamDto){
+        Long adminId = (Long)request.getAttribute("userId");
+        adminService.addTeam(adminId,teamDto);
+        return ResponseEntity.ok("Team added successfully");
     }
 }
