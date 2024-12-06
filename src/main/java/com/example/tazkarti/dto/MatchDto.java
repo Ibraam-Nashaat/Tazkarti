@@ -1,6 +1,7 @@
 package com.example.tazkarti.dto;
 
 import com.example.tazkarti.entity.Team;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
@@ -21,15 +22,15 @@ public class MatchDto {
     @NotBlank(message = "secondlines man can't be empty")
     private String secondLinesman;
 
-    @NotNull(message = "ticket price can't be empty")
+    @Min(value = 1, message = "ticket price must be provided")
     private int ticketPrice;
 
-    @NotNull(message = "stadium id can't be empty")
+    @NotNull(message = "stadium id must be provided")
     private Long stadiumId;
 
-    @NotNull(message = "home team id can't be empty")
+    @NotNull(message = "home team id must be provided")
     private Long homeTeamId;
 
-    @NotNull(message = "away team id can't be empty")
+    @NotNull(message = "away team id must be provided")
     private Long awayTeamId;
 }

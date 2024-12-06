@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -62,6 +63,9 @@ public class ManagerService {
         Optional<Team> homeTeam = teamRepository.findById(matchDto.getHomeTeamId());
         if(homeTeam.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Home team not found");
+        }
+        if(Objects.equals(matchDto.getAwayTeamId(), matchDto.getHomeTeamId())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Home team id can't be equal away team id");
         }
         Optional<Team> awayTeam = teamRepository.findById(matchDto.getAwayTeamId());
         if(awayTeam.isEmpty()){
