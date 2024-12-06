@@ -1,5 +1,6 @@
 package com.example.tazkarti.service;
 
+import com.example.tazkarti.dto.RemoveUserDto;
 import com.example.tazkarti.dto.UpdateUserAccountStatusDto;
 import com.example.tazkarti.entity.AppUser;
 import com.example.tazkarti.enums.AccountStatus;
@@ -36,5 +37,20 @@ public class UserService {
         else user.get().setStatus(AccountStatus.NOT_ACTIVE.getDisplayName());
 
         appUserRepository.save(user.get());
+    }
+
+    public void removeUser(Long adminId, RemoveUserDto removeUserDto){
+        Optional<AppUser> admin = appUserRepository.findById(adminId);
+        if(admin.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"admin id not found");
+        }
+        if(admin.get().getRole() != UserRole.ADMIN){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
+        }
+        Optional <AppUser> user = appUserRepository.findById(removeUserDto.getUserId());
+        if(user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user id not found");
+        }
+        appUserRepository.delete(user.get());
     }
 }

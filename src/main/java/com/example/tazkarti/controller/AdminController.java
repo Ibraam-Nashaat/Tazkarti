@@ -1,6 +1,7 @@
 package com.example.tazkarti.controller;
 
 import com.example.tazkarti.dto.AuthResponseDto;
+import com.example.tazkarti.dto.RemoveUserDto;
 import com.example.tazkarti.dto.UpdateUserAccountStatusDto;
 import com.example.tazkarti.dto.UserDto;
 import com.example.tazkarti.service.UserService;
@@ -20,5 +21,12 @@ public class AdminController {
         Long adminId = (Long)request.getAttribute("userId");
         userService.updateAccountStatus(adminId, updateUserAccountStatusDto);
         return ResponseEntity.ok("User account status updated successfully");
+    }
+
+    @DeleteMapping("/{adminId}")
+    public ResponseEntity<String> removeUser(HttpServletRequest request, @Valid @RequestBody RemoveUserDto removeUserDto){
+        Long adminId = (Long)request.getAttribute("userId");
+        userService.removeUser(adminId,removeUserDto);
+        return ResponseEntity.ok("Removed user successfully");
     }
 }
