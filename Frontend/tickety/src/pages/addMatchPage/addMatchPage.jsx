@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
-import "./MatchDialog.css";
-
-const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
+import "./addMatchPage.css";
+import { loadStadiums,loadTeams } from "./TeamsandStadiums";
+import logo from "../../assets/black_on_trans.png"
+const AddMatch = () => {
   const [dialog, setDialog] = useState(false);
-  const [homeTeam, setHomeTeam] = useState(matchData.homeTeam || "");
-  const [awayTeam, setAwayTeam] = useState(matchData.awayTeam || "");
-  const [venue, setVenue] = useState(matchData.venue || "");
-  const [dateTime, setDateTime] = useState(matchData.dateTime || "");
-  const [mainReferee, setMainReferee] = useState(matchData.mainReferee || "");
-  const [firstLinesman, setFirstLinesman] = useState(matchData.firstLinesman || "");
-  const [secondLinesman, setSecondLinesman] = useState(matchData.secondLinesman || "");
-  const [ticketPrice, setTicketPrice] = useState(matchData.ticketPrice || "");
+  const [homeTeam, setHomeTeam] = useState( "");
+  const [awayTeam, setAwayTeam] = useState( "");
+  const [stadium, setstadium] = useState( "");
+  const [dateTime, setDateTime] = useState( "");
+  const [mainReferee, setMainReferee] = useState( "");
+  const [firstLinesman, setFirstLinesman] = useState( "");
+  const [secondLinesman, setSecondLinesman] = useState( "");
+  const [ticketPrice, setTicketPrice] = useState("");
   const [teams, setTeams] = useState([]);
   const [stadiums, setStadiums] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
     const matchDetails = {
       homeTeam,
       awayTeam,
-      venue,
+      stadium,
       dateTime,
       mainReferee,
       firstLinesman,
@@ -63,16 +64,16 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
 
   return (
     <div>
-      <button onClick={() => setDialog(true)} className="btn">
+      {/* <button onClick={() => setDialog(true)} className="btn">
         Add Match
-      </button>
-      {dialog && (
+      </button> */}
+      {/* {dialog && ( */}
         <div className="dialog">
           <form className="form" onSubmit={handleSubmit}>
             <h2 className="dialog-title">Add Match</h2>
             {error && <p className="error">{error}</p>}
             <div className="form-group">
-              <label>Home Team</label>
+              <label className="labelDataMatch">Home Team</label>
               <select
                 value={homeTeam}
                 onChange={(e) => setHomeTeam(e.target.value)}
@@ -89,7 +90,7 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
               </select>
             </div>
             <div className="form-group">
-              <label>Away Team</label>
+              <label className="labelDataMatch">Away Team</label>
               <select
                 value={awayTeam}
                 onChange={(e) => setAwayTeam(e.target.value)}
@@ -98,22 +99,23 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
                 <option value="" disabled>
                   Select Away Team
                 </option>
-                {teams.map((team) => (
+                {teams.filter((team) => team.name !== homeTeam) .map((team) => (
                   <option key={team.name} value={team.name}>
                     {team.name}
                   </option>
                 ))}
+                
               </select>
             </div>
             <div className="form-group">
-              <label>Venue</label>
+              <label className="labelDataMatch">Stadium</label>
               <select
-                value={venue}
-                onChange={(e) => setVenue(e.target.value)}
+                value={stadium}
+                onChange={(e) => setstadium(e.target.value)}
                 required
               >
                 <option value="" disabled>
-                  Select Venue
+                  Select stadium
                 </option>
                 {stadiums.map((stadium) => (
                   <option key={stadium.name} value={stadium.name}>
@@ -123,45 +125,50 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
               </select>
             </div>
             <div className="form-group">
-              <label>Date & Time</label>
+              <label className="labelDataMatch">Date and Time </label>
               <input
                 type="datetime-local"
+                className="InputStyle"
                 value={dateTime}
                 onChange={(e) => setDateTime(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>Main Referee</label>
+              <label className="labelDataMatch">Main Referee</label>
               <input
                 type="text"
+                className="InputStyle"
                 value={mainReferee}
                 onChange={(e) => setMainReferee(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>First Linesman</label>
+              <label className="labelDataMatch">First Linesman</label>
               <input
                 type="text"
+                className="InputStyle"
                 value={firstLinesman}
                 onChange={(e) => setFirstLinesman(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>Second Linesman</label>
+              <label className="labelDataMatch">Second Linesman</label>
               <input
                 type="text"
+                className="InputStyle"
                 value={secondLinesman}
                 onChange={(e) => setSecondLinesman(e.target.value)}
                 required
               />
             </div>
             <div className="form-group">
-              <label>Ticket Price</label>
+              <label className="labelDataMatch">Ticket Price</label>
               <input
                 type="number"
+                className="InputStyle"
                 value={ticketPrice}
                 onChange={(e) => setTicketPrice(e.target.value)}
                 required
@@ -177,8 +184,12 @@ const AddMatch = ({ onSubmit, matchData, loadTeams, loadStadiums }) => {
             </div>
           </form>
         </div>
-      )}
+        <div className="image-container">
+                <img src={logo}  />
+            </div>
+   {/*  )} */}  
     </div>
+
   );
 };
 
