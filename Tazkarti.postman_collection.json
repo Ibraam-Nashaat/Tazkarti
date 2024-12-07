@@ -1,0 +1,472 @@
+{
+	"info": {
+		"_postman_id": "6eedc322-389a-4a11-8114-0b56a140d69a",
+		"name": "Tazkarti",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26924587"
+	},
+	"item": [
+		{
+			"name": "signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"example123@gmail.com\",\n  \"password\": \"example123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"username\": \"example123\",\n  \"gender\": \"Male\",\n  \"city\": \"New York\",\n  \"address\": \"1234 Main St\",\n  \"birthDate\": \"1990-01-01\",\n  \"role\": \"fan\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"example1@gmail.com\",\n  \"password\": \"example123!\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUserStatus",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjUyLCJpYXQiOjE3MzM1Nzc0MjAsImV4cCI6MTczMzU4MTAyMH0.FLnlDt-FK6NXkeXLP9mLmExVla57VikZe5wZ-QVn6-8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"activateUserAccount\":true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/admins/2/users/152",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"2",
+						"users",
+						"152"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjIsImlhdCI6MTczMzUyNTEzOSwiZXhwIjoxNzMzNTI4NzM5fQ.hpSoEM9DCjtX2by3umn6Iw54vbKOSquCJZwZGjStO-M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/admins/2/users/53",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"2",
+						"users",
+						"53"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddTeam",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiQURNSU4iLCJ1c2VySWQiOjIsImlhdCI6MTczMzUyNTEzOSwiZXhwIjoxNzMzNTI4NzM5fQ.hpSoEM9DCjtX2by3umn6Iw54vbKOSquCJZwZGjStO-M",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"Zamalek\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/admins/2/teams",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"admins",
+						"2",
+						"teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddStadium",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MTAyLCJpYXQiOjE3MzM1MjY1ODUsImV4cCI6MTczMzUzMDE4NX0.oCNIex1_QoOBNFaX8kc8gtP4DrbCmEWYJLYwCdLCTQE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Cairo Stadium 2\",\n  \"city\": \"Cairo\",\n  \"address\": \"123 Main Street\",\n  \"rows\": 10,\n  \"rowSeats\": 20\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/managers/102/stadiums",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"managers",
+						"102",
+						"stadiums"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddMatch",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MTAyLCJpYXQiOjE3MzM1MzA1NzYsImV4cCI6MTczMzUzNDE3Nn0.Ymzm7VPOrAZcV4TsXlu4okXUVwdLjLavnMZCHPG6D9A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dateTime\": \"2025-12-15T19:39:00\",\n  \"mainReferee\": \"John Doe\",\n  \"firstLinesman\": \"Alex Smith 2\",\n  \"secondLinesman\": \"Chris Johnson 1\",\n  \"ticketPrice\": 100,\n  \"stadiumId\": 1,\n  \"homeTeamId\": 2,\n  \"awayTeamId\": 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/managers/102/matches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"managers",
+						"102",
+						"matches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllMatches",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/matches",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"matches"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditMatchDetails",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiTUFOQUdFUiIsInVzZXJJZCI6MTAyLCJpYXQiOjE3MzM1Nzk4MjEsImV4cCI6MTczMzU4MzQyMX0.IqA2CXpxKf-ykj5Z8ZyisE6XGkyNfVWJ4PAKADO8o2k",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dateTime\": \"2024-12-11T19:39:00\",\n  \"mainReferee\": \"Levi\",\n  \"firstLinesman\":\"Armin\",\n  \"secondLinesman\": \"Chris Johnson 1\",\n  \"ticketPrice\": 500,\n  \"stadiumId\": 2,\n  \"homeTeamId\": 2,\n  \"awayTeamId\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/managers/102/matches/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"managers",
+						"102",
+						"matches",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditFanProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRkFOIiwidXNlcklkIjoxNTIsImlhdCI6MTczMzU2ODYzMSwiZXhwIjoxNzMzNTcyMjMxfQ.to06v8CdcS004q_r-9Qj63TMa0BtvsvVE3KdHjsCfTk",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"123456!\",\n  \"firstName\": \"Levi\",\n  \"lastName\": \"Ackerman\",\n  \"gender\": \"Male\",\n  \"city\": \"Paradise Island\",\n  \"address\": \"1234 Main St\",\n  \"birthDate\": \"2000-01-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/fans/152",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fans",
+						"152"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReserveSeat",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRkFOIiwidXNlcklkIjoxNTIsImlhdCI6MTczMzU3NzIyNCwiZXhwIjoxNzMzNTgwODI0fQ.yo8l9XB6cFh1ssy4OqRdzo_TkbRSqs_o_Et6ChLtWq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"creditCardNumber\": 12345789898,\n    \"pinNumber\": 567,\n    \"matchId\": 1,\n    \"seatNumber\": 125\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/fans/152/reserveSeat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fans",
+						"152",
+						"reserveSeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelReservation",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiRkFOIiwidXNlcklkIjoxNTIsImlhdCI6MTczMzU3NzIyNCwiZXhwIjoxNzMzNTgwODI0fQ.yo8l9XB6cFh1ssy4OqRdzo_TkbRSqs_o_Et6ChLtWq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/fans/152/tickets/152",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"fans",
+						"152",
+						"tickets",
+						"152"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
