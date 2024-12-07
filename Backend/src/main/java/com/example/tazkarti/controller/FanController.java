@@ -44,4 +44,9 @@ public class FanController {
         return ResponseEntity.ok(fanService.getAllTickets(fanId));
     }
 
+    @GetMapping({"/{fanId}/tickets/{ticketId}"})
+    public ResponseEntity<TicketDto> getTicketById(HttpServletRequest request,@PathVariable Long ticketId){
+        Long fanId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(fanService.getTicketById(fanId,ticketId));
+    }
 }

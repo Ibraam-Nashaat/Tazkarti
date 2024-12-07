@@ -58,6 +58,24 @@ public class FanService {
         }
         return ticketDtos;
     }
+
+    public TicketDto getTicketById(Long fanId,Long ticketId){
+        Optional<AppUser> fan = appUserRepository.findById(fanId);
+        if(fan.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Fan id not found");
+        }
+        if(!Objects.equals(fan.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Fan is not active yet");
+        }
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+        if(ticket.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Ticket id not found");
+        }
+        if(!Objects.equals(ticket.get().getUser().getId(), fanId)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized access");
+        }
+        return ticketMapper.toDto(ticket.get());
+    }
     public void editProfileData(Long fanId,EditUserProfileDto editUserProfileDto){
         Optional<AppUser> fan = appUserRepository.findById(fanId);
         if(fan.isEmpty()){
