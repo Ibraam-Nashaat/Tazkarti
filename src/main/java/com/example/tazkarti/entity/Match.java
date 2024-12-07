@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,4 +36,7 @@ public class Match{
     @ManyToOne
     @JoinColumn(name = "awayTeamId")
     private Team awayTeam;
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 }
