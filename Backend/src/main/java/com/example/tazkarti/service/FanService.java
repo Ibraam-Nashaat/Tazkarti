@@ -21,6 +21,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -41,7 +43,21 @@ public class FanService {
     public FanService(){
         passwordEncoder= new BCryptPasswordEncoder();
     }
-
+    public List<TicketDto> getAllTickets(Long fanId){
+        Optional<AppUser> fan = appUserRepository.findById(fanId);
+        if(fan.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Fan id not found");
+        }
+        if(!Objects.equals(fan.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Fan is not active yet");
+        }
+        List<Ticket> tickets= ticketRepository.findByUserId(fanId);
+        List<TicketDto> ticketDtos = new ArrayList<>();
+        for(Ticket ticket: tickets){
+            ticketDtos.add(ticketMapper.toDto(ticket));
+        }
+        return ticketDtos;
+    }
     public void editProfileData(Long fanId,EditUserProfileDto editUserProfileDto){
         Optional<AppUser> fan = appUserRepository.findById(fanId);
         if(fan.isEmpty()){

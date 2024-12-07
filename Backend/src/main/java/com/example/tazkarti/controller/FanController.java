@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping({"/fans"})
 public class FanController {
@@ -34,6 +36,12 @@ public class FanController {
         Long fanId = (Long)request.getAttribute("userId");
         fanService.cancelSeatReservation(fanId,ticketId);
         return ResponseEntity.ok("Reservation cancelled successfully");
+    }
+
+    @GetMapping({"/{fanId}/tickets"})
+    public ResponseEntity<List<TicketDto>> getAllTickets(HttpServletRequest request){
+        Long fanId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(fanService.getAllTickets(fanId));
     }
 
 }
