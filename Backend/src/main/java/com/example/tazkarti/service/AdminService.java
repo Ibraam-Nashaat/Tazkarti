@@ -70,4 +70,5 @@ public class AdminService {
         }
         appUserRepository.delete(user.get());
     }
+
 }

@@ -20,4 +20,8 @@ public class MatchController {
     public ResponseEntity<List<GetMatchDto>> getMatches(){
         return ResponseEntity.ok(matchService.getAllMatches());
     }
+    @GetMapping({"/{matchId}"})
+    public ResponseEntity<GetMatchDto> getMatchById(@PathVariable Long matchId){
+        return ResponseEntity.ok(matchService.getMatchById(matchId));
+    }
 }

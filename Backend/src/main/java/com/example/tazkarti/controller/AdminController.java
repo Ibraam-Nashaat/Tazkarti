@@ -21,6 +21,8 @@ public class AdminController {
         return ResponseEntity.ok("User account status updated successfully");
     }
 
+
+
     @DeleteMapping("/{adminId}/users/{userId}")
     public ResponseEntity<String> removeUser(@PathVariable Long userId,HttpServletRequest request){
         Long adminId = (Long)request.getAttribute("userId");
