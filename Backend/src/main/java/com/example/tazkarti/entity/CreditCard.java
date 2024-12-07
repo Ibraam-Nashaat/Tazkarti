@@ -1,9 +1,6 @@
 package com.example.tazkarti.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,4 +13,7 @@ public class CreditCard {
     private Long id;
     private Long creditCardNumber;
     private Long pinNumber;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private AppUser user;
 }

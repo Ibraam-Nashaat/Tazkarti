@@ -116,6 +116,7 @@ public class FanService {
         CreditCard creditCard = new CreditCard();
         creditCard.setCreditCardNumber(seatReservationDto.getCreditCardNumber());
         creditCard.setPinNumber(seatReservationDto.getPinNumber());
+        creditCard.setUser(fan.get());
         creditCardRepository.save(creditCard);
 
         Ticket ticket = new Ticket();
