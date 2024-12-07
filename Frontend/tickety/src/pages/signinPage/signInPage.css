@@ -1,0 +1,35 @@
+
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .labelInput {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    float: left;
+  }
+  
+  .signInInputStyle {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  
+  .signInButton {
+    padding: 10px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: #1f2123;
+    color: white;
+    cursor: pointer;
+  }
+  
+  signInButton:hover {
+    background-color: #28292a;
+  }
+  
