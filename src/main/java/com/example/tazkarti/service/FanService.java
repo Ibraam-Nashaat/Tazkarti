@@ -19,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -91,5 +92,29 @@ public class FanService {
 
         ticket = ticketRepository.save(ticket);
         return ticketMapper.toDto(ticket);
+    }
+
+    public void cancelSeatReservation(Long fanId, Long ticketId){
+        Optional<AppUser> fan = appUserRepository.findById(fanId);
+        if(fan.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Fan id not found");
+        }
+        if(!Objects.equals(fan.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Fan is not active yet");
+        }
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+        if(ticket.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Ticket not found");
+        }
+        LocalDateTime matchDateTime = ticket.get().getMatch().getDateTime();
+        LocalDateTime now = LocalDateTime.now();
+
+        // Calculate the time difference between the match time and the current time
+        Duration duration = Duration.between(now, matchDateTime);
+        System.out.println(duration.toDays());
+        if(duration.toDays() < 3 || duration.isNegative()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Reservation can't be cancelled");
+        }
+        ticketRepository.deleteById(ticketId);
     }
 }

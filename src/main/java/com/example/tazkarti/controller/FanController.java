@@ -29,4 +29,11 @@ public class FanController {
         return ResponseEntity.ok(fanService.reserveSeat(fanId,seatReservationDto));
     }
 
+    @DeleteMapping({"/{fanId}/tickets/{ticketId}"})
+    public ResponseEntity<String> cancelSeatReservation(HttpServletRequest request,@PathVariable Long ticketId){
+        Long fanId = (Long)request.getAttribute("userId");
+        fanService.cancelSeatReservation(fanId,ticketId);
+        return ResponseEntity.ok("Reservation cancelled successfully");
+    }
+
 }
