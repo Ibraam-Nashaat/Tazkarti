@@ -3,6 +3,7 @@ package com.example.tazkarti.service;
 import com.example.tazkarti.dto.MatchDto;
 import com.example.tazkarti.dto.StadiumDto;
 import com.example.tazkarti.entity.AppUser;
+import com.example.tazkarti.entity.Match;
 import com.example.tazkarti.entity.Stadium;
 import com.example.tazkarti.entity.Team;
 import com.example.tazkarti.enums.AccountStatus;
@@ -51,6 +52,17 @@ public class ManagerService {
     public void addMatchDetails(Long managerId,MatchDto matchDto){
        validateMatchDetails(managerId,matchDto);
        matchRepository.save(matchMapper.matchDtoToMatch(matchDto));
+    }
+
+    public void editMatchDetails(Long managerId,Long matchId,MatchDto matchDto){
+        validateMatchDetails(managerId,matchDto);
+        Optional<Match> match = matchRepository.findById(matchId);
+        if(match.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Match id not found");
+        }
+        Match updatedMatchDetails= matchMapper.matchDtoToMatch(matchDto);
+        updatedMatchDetails.setId(matchId);
+        matchRepository.save(updatedMatchDetails);
     }
 
     private void validateMatchDetails(Long managerId,MatchDto matchDto){

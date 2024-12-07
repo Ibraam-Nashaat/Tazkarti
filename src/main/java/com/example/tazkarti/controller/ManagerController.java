@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping({"/managers"})
@@ -31,5 +28,12 @@ public class ManagerController {
         Long managerId = (Long)request.getAttribute("userId");
         managerService.addMatchDetails(managerId,matchDto);
         return ResponseEntity.ok("Match added successfully");
+    }
+
+    @PutMapping({"/{managerId}/matches/{matchId}"})
+    public ResponseEntity<String> editMatchDetails(@PathVariable Long matchId, HttpServletRequest request, @Valid @RequestBody MatchDto matchDto){
+        Long managerId = (Long)request.getAttribute("userId");
+        managerService.editMatchDetails(managerId,matchId,matchDto);
+        return ResponseEntity.ok("Match updated successfully");
     }
 }
