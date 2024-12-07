@@ -52,6 +52,7 @@ public class ManagerService {
        validateMatchDetails(managerId,matchDto);
        matchRepository.save(matchMapper.matchDtoToMatch(matchDto));
     }
+
     private void validateMatchDetails(Long managerId,MatchDto matchDto){
         Optional<AppUser> user = appUserRepository.findById(managerId);
         if(user.isEmpty()){
