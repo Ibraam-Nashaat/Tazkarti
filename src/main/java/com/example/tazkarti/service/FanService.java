@@ -1,15 +1,25 @@
 package com.example.tazkarti.service;
 
 import com.example.tazkarti.dto.EditUserProfileDto;
+import com.example.tazkarti.dto.SeatReservationDto;
+import com.example.tazkarti.dto.TicketDto;
 import com.example.tazkarti.entity.AppUser;
+import com.example.tazkarti.entity.CreditCard;
+import com.example.tazkarti.entity.Match;
+import com.example.tazkarti.entity.Ticket;
 import com.example.tazkarti.enums.AccountStatus;
+import com.example.tazkarti.mapper.TicketMapper;
 import com.example.tazkarti.repository.AppUserRepository;
+import com.example.tazkarti.repository.CreditCardRepository;
+import com.example.tazkarti.repository.MatchRepository;
+import com.example.tazkarti.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -17,6 +27,15 @@ import java.util.Optional;
 public class FanService {
     @Autowired
     private AppUserRepository appUserRepository;
+    @Autowired
+    private MatchRepository matchRepository;
+    @Autowired
+    private TicketRepository ticketRepository;
+    @Autowired
+    private CreditCardRepository creditCardRepository;
+
+    @Autowired
+    private TicketMapper ticketMapper;
     BCryptPasswordEncoder passwordEncoder;
     public FanService(){
         passwordEncoder= new BCryptPasswordEncoder();
@@ -35,5 +54,42 @@ public class FanService {
         fan.get().setAddress(editUserProfileDto.getAddress());
         fan.get().setBirthDate(editUserProfileDto.getBirthDate());
         appUserRepository.save(fan.get());
+    }
+
+    public TicketDto reserveSeat(Long fanId, SeatReservationDto seatReservationDto){
+        Optional<AppUser> fan = appUserRepository.findById(fanId);
+        if(fan.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Fan id not found");
+        }
+        if(!Objects.equals(fan.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Fan is not active yet");
+        }
+        Optional<Match> match = matchRepository.findById(seatReservationDto.getMatchId());
+        if(match.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Match id not found");
+        }
+        int seatNumber = seatReservationDto.getSeatNumber();
+        int seatRows = match.get().getStadium().getRows();
+        int seatsPerRow = match.get().getStadium().getRowSeats();
+        if(seatNumber < 1 || seatNumber > (seatRows*seatsPerRow)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"seat number is out of range");
+        }
+        boolean isSeatReserved =ticketRepository.existsByMatchIdAndSeatNumber(seatReservationDto.getMatchId(),seatReservationDto.getSeatNumber());
+        if(isSeatReserved){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"seat is already reserved");
+        }
+        CreditCard creditCard = new CreditCard();
+        creditCard.setCreditCardNumber(seatReservationDto.getCreditCardNumber());
+        creditCard.setPinNumber(seatReservationDto.getPinNumber());
+        creditCardRepository.save(creditCard);
+
+        Ticket ticket = new Ticket();
+        ticket.setReservationDateTime(LocalDateTime.now());
+        ticket.setSeatNumber(seatNumber);
+        ticket.setUser(fan.get());
+        ticket.setMatch(match.get());
+
+        ticket = ticketRepository.save(ticket);
+        return ticketMapper.toDto(ticket);
     }
 }

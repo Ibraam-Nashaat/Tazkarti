@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
-    public Optional<AppUser> findByMatchId(Long matchId);
+    boolean existsByMatchIdAndSeatNumber(Long matchId, int seatNumber);
 
 }
