@@ -46,6 +46,9 @@ public class ManagerService {
         if(user.get().getRole() != UserRole.MANAGER){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
         }
+        if(!Objects.equals(user.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Manager is not active yet");
+        }
         stadiumRepository.save(stadiumMapper.DtoToEntity(stadiumDto));
 
     }
@@ -72,6 +75,9 @@ public class ManagerService {
         }
         if(user.get().getRole() != UserRole.MANAGER){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Unauthorized");
+        }
+        if(!Objects.equals(user.get().getStatus(), AccountStatus.ACTIVE.getDisplayName())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Manager is not active yet");
         }
         Optional<Team> homeTeam = teamRepository.findById(matchDto.getHomeTeamId());
         if(homeTeam.isEmpty()){

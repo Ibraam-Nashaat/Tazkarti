@@ -1,5 +1,6 @@
 package com.example.tazkarti.controller;
 
+import com.example.tazkarti.dto.GeneralResponseDto;
 import com.example.tazkarti.dto.MatchDto;
 import com.example.tazkarti.dto.StadiumDto;
 import com.example.tazkarti.dto.TeamDto;
@@ -17,23 +18,23 @@ public class ManagerController {
     private ManagerService managerService;
 
     @PostMapping({"/{managerId}/stadiums"})
-    public ResponseEntity<String> addStadium(HttpServletRequest request, @Valid @RequestBody StadiumDto stadiumDto){
+    public ResponseEntity<GeneralResponseDto> addStadium(HttpServletRequest request, @Valid @RequestBody StadiumDto stadiumDto){
         Long managerId = (Long)request.getAttribute("userId");
         managerService.addStadium(managerId,stadiumDto);
-        return ResponseEntity.ok("Stadium added successfully");
+        return ResponseEntity.ok(new GeneralResponseDto("Stadium added successfully"));
     }
 
     @PostMapping({"/{managerId}/matches"})
-    public ResponseEntity<String> addMatch(HttpServletRequest request, @Valid @RequestBody MatchDto matchDto){
+    public ResponseEntity<GeneralResponseDto> addMatch(HttpServletRequest request, @Valid @RequestBody MatchDto matchDto){
         Long managerId = (Long)request.getAttribute("userId");
         managerService.addMatchDetails(managerId,matchDto);
-        return ResponseEntity.ok("Match added successfully");
+        return ResponseEntity.ok(new GeneralResponseDto("Match added successfully"));
     }
 
     @PutMapping({"/{managerId}/matches/{matchId}"})
-    public ResponseEntity<String> editMatchDetails(@PathVariable Long matchId, HttpServletRequest request, @Valid @RequestBody MatchDto matchDto){
+    public ResponseEntity<GeneralResponseDto> editMatchDetails(@PathVariable Long matchId, HttpServletRequest request, @Valid @RequestBody MatchDto matchDto){
         Long managerId = (Long)request.getAttribute("userId");
         managerService.editMatchDetails(managerId,matchId,matchDto);
-        return ResponseEntity.ok("Match updated successfully");
+        return ResponseEntity.ok(new GeneralResponseDto("Match updated successfully"));
     }
 }

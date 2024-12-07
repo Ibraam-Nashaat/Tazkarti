@@ -1,6 +1,7 @@
 package com.example.tazkarti.controller;
 
 import com.example.tazkarti.dto.EditUserProfileDto;
+import com.example.tazkarti.dto.GeneralResponseDto;
 import com.example.tazkarti.dto.SeatReservationDto;
 import com.example.tazkarti.dto.TicketDto;
 import com.example.tazkarti.service.FanService;
@@ -19,10 +20,10 @@ public class FanController {
     private FanService fanService;
 
     @PutMapping({"/{fanId}"})
-    public ResponseEntity<String> editProfileData(HttpServletRequest request, @Valid @RequestBody EditUserProfileDto editUserProfileDto){
+    public ResponseEntity<GeneralResponseDto> editProfileData(HttpServletRequest request, @Valid @RequestBody EditUserProfileDto editUserProfileDto){
         Long fanId = (Long)request.getAttribute("userId");
         fanService.editProfileData(fanId,editUserProfileDto);
-        return ResponseEntity.ok("User profile data updated successfully");
+        return ResponseEntity.ok(new GeneralResponseDto("User profile data updated successfully"));
     }
 
     @PostMapping({"/{fanId}/reserveSeat"})
@@ -32,10 +33,10 @@ public class FanController {
     }
 
     @DeleteMapping({"/{fanId}/tickets/{ticketId}"})
-    public ResponseEntity<String> cancelSeatReservation(HttpServletRequest request,@PathVariable Long ticketId){
+    public ResponseEntity<GeneralResponseDto> cancelSeatReservation(HttpServletRequest request,@PathVariable Long ticketId){
         Long fanId = (Long)request.getAttribute("userId");
         fanService.cancelSeatReservation(fanId,ticketId);
-        return ResponseEntity.ok("Reservation cancelled successfully");
+        return ResponseEntity.ok(new GeneralResponseDto("Reservation cancelled successfully"));
     }
 
     @GetMapping({"/{fanId}/tickets"})
