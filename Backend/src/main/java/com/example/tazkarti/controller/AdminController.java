@@ -1,5 +1,6 @@
 package com.example.tazkarti.controller;
 
+import com.example.tazkarti.dto.GetUserDto;
 import com.example.tazkarti.dto.TeamDto;
 import com.example.tazkarti.dto.UpdateUserAccountStatusDto;
 import com.example.tazkarti.service.AdminService;
@@ -8,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping({"/admins"})
@@ -35,5 +38,17 @@ public class AdminController {
         Long adminId = (Long)request.getAttribute("userId");
         adminService.addTeam(adminId,teamDto);
         return ResponseEntity.ok("Team added successfully");
+    }
+
+    @GetMapping("/{adminId}/users")
+    public ResponseEntity<List<GetUserDto>> getAllUsers(HttpServletRequest request){
+        Long adminId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(adminService.getAllUsers(adminId));
+    }
+
+    @GetMapping("/{adminId}/users/{userId}")
+    public ResponseEntity<GetUserDto> getUserById(HttpServletRequest request,@PathVariable Long userId){
+        Long adminId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(adminService.getUserById(adminId,userId));
     }
 }
