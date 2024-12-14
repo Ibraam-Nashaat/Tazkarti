@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Snackbar,
-  Alert,
-} from '@mui/material';
+import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 import logo from '../../assets/black_on_trans.png';
 import AuthService from '../../services/AuthService';
 import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook for redirection
@@ -17,23 +10,28 @@ const SignInPage = () => {
     password: '',
   });
   const [error, setError] = useState(null); // To hold any error message
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Control the snackbar visibility
   const navigate = useNavigate(); // useNavigate hook for navigation
   const authService = new AuthService();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSignInClick = async () => {
+    // Validate if email or password is empty before proceeding
+    if (!formData.email || !formData.password) {
+      setError('Email and password are required.');
+      return;
+    }
+
     try {
-      // Send the data to AuthService
+      // Send the data to AuthService if the form is valid
       const response = await authService.signIn(formData);
       navigate('/');
       // Redirect or perform other actions on success
     } catch (error) {
-      setError(error.response?.data?.message || 'Something went wrong!');
-      setOpenSnackbar(true); // Open the error snackbar on failure
+      setError(error.message);
     }
   };
 
@@ -83,6 +81,11 @@ const SignInPage = () => {
         required
         margin="normal"
       />
+       {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
 
       <Button
         variant="contained"
@@ -93,20 +96,6 @@ const SignInPage = () => {
       >
         Sign In
       </Button>
-
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnackbar(false)}
-      >
-        <Alert
-          onClose={() => setOpenSnackbar(false)}
-          severity="error"
-          sx={{ width: '100%' }}
-        >
-          {error}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

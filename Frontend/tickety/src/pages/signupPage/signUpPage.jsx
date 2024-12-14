@@ -9,10 +9,10 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook for redirection
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/black_on_trans.png';
 import Grid from '@mui/material/Grid2';
-import AuthService from '../../services/AuthService'; // Make sure to import AuthService
+import AuthService from '../../services/AuthService';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -37,7 +37,30 @@ const SignupPage = () => {
   };
 
   const authService = new AuthService();
+
+  // Validation function
+  const validateForm = () => {
+    // Check if all required fields are filled
+    for (const field in formData) {
+      if (formData[field] === '' && field !== 'address') {
+        setError(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+        return false;
+      }
+    }
+    // Check if password and confirm password match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return false;
+    }
+    return true;
+  };
+
   const handleSignUpClick = async () => {
+    // First, validate the form before sending to the backend
+    if (!validateForm()) {
+      return; // If validation fails, don't proceed
+    }
+
     try {
       const response = await authService.signUp(formData);
       // On successful sign up, navigate to another page (e.g., login page)
@@ -139,6 +162,19 @@ const SignupPage = () => {
         </Grid>
 
         <Grid item size={6}>
+          <TextField
+            label="Confirm Password"
+            variant="outlined"
+            type="password"
+            fullWidth
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
           <FormControl fullWidth>
             <InputLabel id="gender-label">Gender</InputLabel>
             <Select
@@ -206,7 +242,7 @@ const SignupPage = () => {
           />
         </Grid>
 
-        <Grid item size={6}>
+        <Grid item size={12}>
           <TextField
             label="Address"
             variant="outlined"

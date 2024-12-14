@@ -15,12 +15,18 @@ class AuthService {
       if (!response.ok) {
         // Handle non-2xx responses (e.g., 400, 500)
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Something went wrong!');
+        const firstError = Object.entries(errorData)[0];
+        throw new Error(
+          firstError ? `${firstError[1]}` : 'Something went wrong!'
+        );
       }
 
       // If the response is successful, return the response data
       const result = await response.json();
-      console.log(result);
+      // Store JWT and role in localStorage
+      localStorage.setItem('accessToken', result.jwt); 
+      localStorage.setItem('role', result.role); 
+
       return result;
     } catch (error) {
       throw error; // Throw the error to be handled in the component
@@ -61,8 +67,9 @@ class AuthService {
       // Check if the response is successful
       if (!response.ok) {
         const errorData = await response.json();
+        const firstError = Object.entries(errorData)[0];
         throw new Error(
-          errorData.message || 'An error occurred during sign up'
+          firstError ? `${firstError[1]}` : 'Something went wrong!'
         );
       }
 
