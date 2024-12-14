@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EditData from './pages/editDataPage/editData';
 import AddMatch from './pages/addMatchPage/addMatchPage';
 import ViewMatchPage from './pages/viewMatchesPage/ViewMatchPage';
+import UserListPage from './pages/ViewUsersPage';
 function App() {
   return (
     <>
@@ -18,6 +19,8 @@ function App() {
           <Route path="/editdata" element={<EditData />} />
           <Route path="/addmatch" element={<AddMatch />} />
           <Route path="/viewmatch" element={<ViewMatchPage />} />
+          <Route path="/users" element={<UserListPage />} />
+
         </Routes>
       </Router>
     </>
