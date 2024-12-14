@@ -1,0 +1,55 @@
+.button-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px;
+  }
+  
+  
+  button {
+    padding: 10px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: #1f2123;
+    color: white;
+    cursor: pointer;
+  }
+  select{
+    width: 96%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+
+  button:hover {
+    background-color: #28292a;
+  }
+
+.input-group {
+    margin-bottom: 20px;
+  }
+  
+  .labelInput {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    float: left;
+  }
+  .signUpInputStyle {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  h2 {
+    margin: 0; 
+    font-size: 25px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #000000;
+  }
