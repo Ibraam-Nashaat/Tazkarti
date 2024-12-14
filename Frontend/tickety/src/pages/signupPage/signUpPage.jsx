@@ -36,9 +36,9 @@ const SignupPage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const authService = new AuthService();
   const handleSignUpClick = async () => {
     try {
-      const authService = new AuthService();
       const response = await authService.signUp(formData);
       // On successful sign up, navigate to another page (e.g., login page)
       navigate('/signin'); // Update this with the actual path you want to redirect to

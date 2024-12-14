@@ -1,6 +1,32 @@
 import API_BASE_URL from '../config'; // Import the base URL from the config file
 
 class AuthService {
+  async signIn(formData) {
+    console.log(formData);
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        // Handle non-2xx responses (e.g., 400, 500)
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Something went wrong!');
+      }
+
+      // If the response is successful, return the response data
+      const result = await response.json();
+      console.log(result);
+      return result;
+    } catch (error) {
+      throw error; // Throw the error to be handled in the component
+    }
+  }
+
   async signUp(formData) {
     const apiUrl = `${API_BASE_URL}/auth/signup`; // Use the base URL from the config file
 
