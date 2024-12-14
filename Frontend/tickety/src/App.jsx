@@ -6,19 +6,20 @@ import SignupPage from './pages/signupPage/signUpPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import EditData from './pages/editDataPage/editData'
 import AddMatch from './pages/addMatchPage/addMatchPage'
+import ViewMatchPage from './pages/viewMatchesPage/ViewMatchPage'
 function App() {
-
+  
 
   return (
     <>
             <Router>
                 <Routes>
-                    <Route  element={<WelcomePage />} />
+                    <Route path="/" element={<WelcomePage />} />
                     <Route  path="/signin" element= {<SignInPage/>} /> 
                     <Route path="/signup" element={<SignupPage/>} />
                     <Route   path ="/editdata"  element={<EditData />} />
-                    <Route index    /* path="/addmatch" */ element={<AddMatch />} />
-
+                    <Route   path="/addmatch"  element={<AddMatch />} />
+                    <Route   path="/viewmatch"  element={<ViewMatchPage />} />
                 </Routes>
             </Router>
     </>

@@ -10,6 +10,12 @@ const WelcomePage = () => {
   const handleSignUpClick = () => {
     navigate("/signup");
   };
+  // const handleAddmatchClick = () => {
+  //   navigate("/addmatch");
+  // };
+  // const handleEditdataClick = () => {
+  //   navigate("/editdata");
+  // };
 
   return (
     <div className="welcome-page">
@@ -18,8 +24,8 @@ const WelcomePage = () => {
         className="translogo"
       />
       <div className="button-container">
-        <button className='signButton' onClick={() => handleSignInClick()}>SignIn</button>
-        <button className='signButton' onClick={() => handleSignUpClick()}>SignUp</button>
+        <button className='signButton' onClick={() => handleSignInClick()}>Sign In</button>
+        <button className='signButton' onClick={() => handleSignUpClick()}>Sign Up</button>
       </div>
     </div>
   );

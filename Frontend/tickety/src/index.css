@@ -12,6 +12,18 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* Reset margins and paddings */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%; /* Ensure the root elements take up full height */
+  overflow: hidden; /* Prevent any scrollbars */
+}
+
 
 a {
   font-weight: 500;
@@ -28,6 +40,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: rgb(27, 27, 27);
 }
 
 h1 {
