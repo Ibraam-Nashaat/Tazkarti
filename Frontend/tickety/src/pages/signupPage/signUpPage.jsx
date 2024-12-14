@@ -9,10 +9,11 @@ import {
   InputLabel,
   FormControl,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link here
 import logo from '../../assets/black_on_trans.png';
 import Grid from '@mui/material/Grid2';
 import AuthService from '../../services/AuthService';
+import NavBar from '../../components/Navbar';
 
 const SignupPage = () => {
   const [formData, setFormData] = useState({
@@ -43,7 +44,9 @@ const SignupPage = () => {
     // Check if all required fields are filled
     for (const field in formData) {
       if (formData[field] === '' && field !== 'address') {
-        setError(`${field.charAt(0).toUpperCase() + field.slice(1)} is required`);
+        setError(
+          `${field.charAt(0).toUpperCase() + field.slice(1)} is required`
+        );
         return false;
       }
     }
@@ -72,198 +75,216 @@ const SignupPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '20px',
-        gap: '16px',
-        maxWidth: '900px',
-        margin: 'auto',
-        boxShadow: 3,
-        borderRadius: 2,
-        backgroundColor: 'white',
-      }}
-    >
-      <img src={logo} alt="Logo" style={{ width: '150px' }} />
-      <Typography variant="h4" gutterBottom>
-        Sign Up
-      </Typography>
+    <>
+      <NavBar />
 
-      {/* Error Message Display */}
-      {error && (
-        <Typography variant="body2" color="error">
-          {error}
-        </Typography>
-      )}
-
-      <Grid container spacing={2} columns={12}>
-        <Grid item size={6}>
-          <TextField
-            label="First Name"
-            variant="outlined"
-            fullWidth
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Last Name"
-            variant="outlined"
-            fullWidth
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Username"
-            variant="outlined"
-            fullWidth
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Email"
-            variant="outlined"
-            type="email"
-            fullWidth
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Password"
-            variant="outlined"
-            type="password"
-            fullWidth
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Confirm Password"
-            variant="outlined"
-            type="password"
-            fullWidth
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <FormControl fullWidth>
-            <InputLabel id="gender-label">Gender</InputLabel>
-            <Select
-              labelId="gender-label"
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              label="Gender"
-              required
-            >
-              <MenuItem value="" disabled>
-                Select your gender
-              </MenuItem>
-              <MenuItem value="male">Male</MenuItem>
-              <MenuItem value="female">Female</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item size={6}>
-          <FormControl fullWidth>
-            <InputLabel id="role-label">Role</InputLabel>
-            <Select
-              labelId="role-label"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              label="Role"
-              required
-            >
-              <MenuItem value="" disabled>
-                Select your Role
-              </MenuItem>
-              <MenuItem value="fan">Fan</MenuItem>
-              <MenuItem value="manager">Manager</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="Date of Birth"
-            variant="outlined"
-            type="date"
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            name="dateOfBirth"
-            value={formData.dateOfBirth}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={6}>
-          <TextField
-            label="City"
-            variant="outlined"
-            fullWidth
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            required
-          />
-        </Grid>
-
-        <Grid item size={12}>
-          <TextField
-            label="Address"
-            variant="outlined"
-            fullWidth
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-          />
-        </Grid>
-      </Grid>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        sx={{ marginTop: '16px' }}
-        onClick={handleSignUpClick}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          padding: '20px',
+          gap: '16px',
+          maxWidth: '900px',
+          margin: 'auto',
+          boxShadow: 3,
+          borderRadius: 2,
+          backgroundColor: 'white',
+          marginTop: '160px',
+        }}
       >
-        Sign Up
-      </Button>
-    </Box>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: '#2e7d32', marginTop: '20px' }}
+        >
+          Sign Up
+        </Typography>
+
+        <Grid container spacing={2} columns={12}>
+          <Grid item size={6}>
+            <TextField
+              label="First Name"
+              variant="outlined"
+              fullWidth
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Username"
+              variant="outlined"
+              fullWidth
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Email"
+              variant="outlined"
+              type="email"
+              fullWidth
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Confirm Password"
+              variant="outlined"
+              type="password"
+              fullWidth
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <FormControl fullWidth>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                labelId="gender-label"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                label="Gender"
+                required
+              >
+                <MenuItem value="" disabled>
+                  Select your gender
+                </MenuItem>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item size={6}>
+            <FormControl fullWidth>
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                label="Role"
+                required
+              >
+                <MenuItem value="" disabled>
+                  Select your Role
+                </MenuItem>
+                <MenuItem value="fan">Fan</MenuItem>
+                <MenuItem value="manager">Manager</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="Date of Birth"
+              variant="outlined"
+              type="date"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={6}>
+            <TextField
+              label="City"
+              variant="outlined"
+              fullWidth
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+
+          <Grid item size={12}>
+            <TextField
+              label="Address"
+              variant="outlined"
+              fullWidth
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
+
+        {/* Error Message Display */}
+        {error && (
+          <Typography variant="body2" color="error">
+            {error}
+          </Typography>
+        )}
+
+        <Button
+          variant="contained"
+          size="large"
+          sx={{ marginTop: '16px', backgroundColor: '#2e7d32' }}
+          onClick={handleSignUpClick}
+        >
+          Sign Up
+        </Button>
+
+        {/* Link to Sign In page */}
+        <Typography variant="body2" sx={{ marginTop: '16px' }}>
+          Already have an account?{' '}
+          <Link
+            to="/signin"
+            style={{ textDecoration: 'underline', color: '#2e7d32' }}
+          >
+            Sign In
+          </Link>
+        </Typography>
+      </Box>
+    </>
   );
 };
 
