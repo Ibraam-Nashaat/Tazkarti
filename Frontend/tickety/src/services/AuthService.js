@@ -2,7 +2,6 @@ import API_BASE_URL from '../config'; // Import the base URL from the config fil
 
 class AuthService {
   async signIn(formData) {
-    console.log(formData);
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -26,7 +25,7 @@ class AuthService {
       // Store JWT and role in localStorage
       localStorage.setItem('accessToken', result.jwt); 
       localStorage.setItem('role', result.role); 
-
+      localStorage.setItem('userID', result.userId);
       return result;
     } catch (error) {
       throw error; // Throw the error to be handled in the component
