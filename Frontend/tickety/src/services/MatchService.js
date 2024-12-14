@@ -2,7 +2,7 @@ import API_BASE_URL from '../config'; // Import the base URL from the config fil
 
 class MatchService {
   async getAllTeams() {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userID');
     const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token
     console.log('hello');
     const response = await fetch(`${API_BASE_URL}/managers/${userId}/teams`, {
@@ -27,7 +27,7 @@ class MatchService {
   }
 
   async getAllStadiums() {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userID');
     const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token
 
     const response = await fetch(
@@ -53,7 +53,7 @@ class MatchService {
   }
 
   async addMatch(matchDetails) {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userID');
     const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token
 
     try {

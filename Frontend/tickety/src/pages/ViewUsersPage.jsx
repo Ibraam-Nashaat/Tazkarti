@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Card,
@@ -8,176 +8,62 @@ import {
   Divider,
 } from '@mui/material';
 import NavBar from '../components/Navbar';
+import AdminService from '../services/AdminService';
 
 const UserListPage = () => {
-  const users = [
-    {
-      userId: 303,
-      email: 'admin2@gmail.com',
-      firstName: 'John',
-      lastName: 'Doe',
-      username: 'admin2',
-      gender: 'Male',
-      city: 'New York',
-      address: '1234 Main St',
-      birthDate: '1990-01-01',
-      role: 'MANAGER',
-      accountStatus: 'PENDING',
-    },
-    {
-      userId: 304,
-      email: 'user1@gmail.com',
-      firstName: 'Jane',
-      lastName: 'Smith',
-      username: 'user1',
-      gender: 'Female',
-      city: 'Los Angeles',
-      address: '5678 Elm St',
-      birthDate: '1992-05-12',
-      role: 'EMPLOYEE',
-      accountStatus: 'ACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-    {
-      userId: 305,
-      email: 'user2@gmail.com',
-      firstName: 'Michael',
-      lastName: 'Brown',
-      username: 'user2',
-      gender: 'Male',
-      city: 'Chicago',
-      address: '9101 Oak St',
-      birthDate: '1988-07-22',
-      role: 'EMPLOYEE',
-      accountStatus: 'INACTIVE',
-    },
-  ];
-
+  const adminService = new AdminService();
+  const [users, setUsers] = useState([]); // State for storing users
   const [selectedUser, setSelectedUser] = useState(null);
+
+  // Fetch users when the component mounts
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const allUsers = await adminService.getAllUsers();
+        setUsers(allUsers);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+    fetchUsers();
+  }, []); // Empty dependency array to run only once when the component mounts
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
   };
 
-  const handleActivate = () => {
-    if (selectedUser) {
+  const handleActivate = async (user, event) => {
+    event.stopPropagation(); // Prevent event propagation
+    try {
+      const response = await adminService.changeAccountStatus(
+        true,
+        user.userId
+      );
       setSelectedUser({ ...selectedUser, accountStatus: 'ACTIVE' });
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
-  const handleDeactivate = () => {
-    if (selectedUser) {
+  const handleDeactivate = async (user, event) => {
+    event.stopPropagation(); // Prevent event propagation
+    try {
+      const response = await adminService.changeAccountStatus(
+        false,
+        user.userId
+      );
       setSelectedUser({ ...selectedUser, accountStatus: 'INACTIVE' });
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
-  const handleRemoveUser = () => {
-    if (selectedUser) {
-      alert(`User ${selectedUser.username} removed.`);
-      setSelectedUser(null);
+  const handleRemoveUser = async (user, event) => {
+    event.stopPropagation(); // Prevent event propagation
+    try {
+      const response = await adminService.removeUser(user.userId);
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -200,6 +86,7 @@ const UserListPage = () => {
             overflowY: 'auto', // Make only the user list scrollable
             maxHeight: '100%',
             borderRight: '2px solid #ddd',
+            paddingTop: '20px',
           }}
         >
           {users.map((user) => (
@@ -209,8 +96,7 @@ const UserListPage = () => {
                 margin: '8px',
                 display: 'flex',
                 alignItems: 'center',
-                border: 'none',
-                padding: '8px',
+                padding: '10px',
               }}
             >
               <CardContent
@@ -257,9 +143,9 @@ const UserListPage = () => {
           {selectedUser ? (
             <Card
               sx={{
-                padding: '20px',
+                padding: '80px',
                 border: 'none',
-                maxWidth: '700px', // Increased width
+                maxWidth: '900px', // Increased
                 width: '100%',
               }}
             >
@@ -284,28 +170,28 @@ const UserListPage = () => {
                     marginLeft: '100px',
                   }}
                 >
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Email:</strong> {selectedUser.email}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Username:</strong> {selectedUser.username}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Gender:</strong> {selectedUser.gender}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>City:</strong> {selectedUser.city}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Address:</strong> {selectedUser.address}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Birth Date:</strong> {selectedUser.birthDate}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Role:</strong> {selectedUser.role}
                   </Typography>
-                  <Typography>
+                  <Typography sx={{ fontSize: '1.5rem' }}>
                     <strong>Account Status:</strong>{' '}
                     {selectedUser.accountStatus}
                   </Typography>
@@ -323,14 +209,16 @@ const UserListPage = () => {
                       <Button
                         variant="contained"
                         color="success"
-                        onClick={handleActivate}
+                        onClick={(event) => handleActivate(selectedUser, event)}
                       >
                         Activate
                       </Button>
                       <Button
                         variant="contained"
                         color="warning"
-                        onClick={handleDeactivate}
+                        onClick={(event) =>
+                          handleDeactivate(selectedUser, event)
+                        }
                       >
                         Deactivate
                       </Button>
@@ -339,7 +227,7 @@ const UserListPage = () => {
                     <Button
                       variant="contained"
                       color="error"
-                      onClick={handleRemoveUser}
+                      onClick={(event) => handleRemoveUser(selectedUser, event)}
                     >
                       Remove User
                     </Button>
