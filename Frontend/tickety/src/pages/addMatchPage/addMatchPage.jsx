@@ -60,7 +60,8 @@ const AddMatch = () => {
     return fields.every((field) => field !== '');
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Fix the typo here
     if (!validateForm()) {
       setError('All fields are required.');
       return;
@@ -90,6 +91,7 @@ const AddMatch = () => {
     try {
       const response = await matchService.addMatch(matchDetails);
       toast.success('Match added successfully!');
+      setError('');
     } catch (error) {
       setError(error.message);
     }
