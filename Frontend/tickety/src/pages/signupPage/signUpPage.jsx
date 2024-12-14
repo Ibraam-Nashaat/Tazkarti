@@ -1,160 +1,233 @@
 import React, { useState } from 'react';
-import './signUpPage.css';
-import logo from "../../assets/black_on_trans.png"
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+} from '@mui/material';
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook for redirection
+import logo from '../../assets/black_on_trans.png';
+import Grid from '@mui/material/Grid2';
+import AuthService from '../../services/AuthService'; // Make sure to import AuthService
+
 const SignupPage = () => {
-  const handleSignUpClick = (action) => {
-    alert(`You clicked ${action}`);
+  const [formData, setFormData] = useState({
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    gender: '',
+    dateOfBirth: '',
+    city: '',
+    address: '',
+    role: '',
+  });
+  const [error, setError] = useState(null); // State to store error message
+  const navigate = useNavigate(); // useNavigate hook for navigation
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
-  const [gender, setGender] = useState(""); 
-  const handleGenderChange = (event) => {
-    setGender(event.target.value);
-  };
-  const [role, setRole] = useState(""); 
-  const handleRoleChange = (event) => {
-    setRole(event.target.value);
+
+  const handleSignUpClick = async () => {
+    try {
+      const authService = new AuthService();
+      const response = await authService.signUp(formData);
+      // On successful sign up, navigate to another page (e.g., login page)
+      navigate('/signin'); // Update this with the actual path you want to redirect to
+    } catch (error) {
+      // Set the error message to display in the UI
+      setError(error.message);
+    }
   };
 
   return (
-    <div className="welcome-page">
-      <img
-        src={logo}
-        className="translogo"
-      />
-      <h2>Sign Up</h2>
-      <div className="input-group">
-            <label className="labelInput" >username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              className='signUpInputStyle'
-              required
-              placeholder="Enter your username"
-            />
-            </div>  
-      <div className="input-group">
-            <label className="labelInput" >First name</label>
-            <input
-              type="text"
-              id="firstname"
-              name="firstname"
-              className='signUpInputStyle'
-              required
-              placeholder="Enter your firstname"
-            />
-            </div>
-            <div className="input-group">
-            <label className="labelInput" >last name</label>
-            <input
-              type="text"
-              id="lastname"
-              name="lastname"
-              className='signUpInputStyle'
-              required
-              placeholder="Enter your lastname"
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className='signUpInputStyle'
-              required
-              placeholder="Enter your email"
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              className='signUpInputStyle'
-              required
-              placeholder="Enter your password"
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Confirm Password</label>
-            <input
-              type="password"
-              id="confirm-password"
-              name="confirm-password"
-              className='signUpInputStyle'
-              required
-              placeholder="Confirm your password"
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Gender</label>
-            <select  
-              id="gender"
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '20px',
+        gap: '16px',
+        maxWidth: '900px',
+        margin: 'auto',
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: 'white',
+      }}
+    >
+      <img src={logo} alt="Logo" style={{ width: '150px' }} />
+      <Typography variant="h4" gutterBottom>
+        Sign Up
+      </Typography>
+
+      {/* Error Message Display */}
+      {error && (
+        <Typography variant="body2" color="error">
+          {error}
+        </Typography>
+      )}
+
+      <Grid container spacing={2} columns={12}>
+        <Grid item size={6}>
+          <TextField
+            label="First Name"
+            variant="outlined"
+            fullWidth
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Last Name"
+            variant="outlined"
+            fullWidth
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Email"
+            variant="outlined"
+            type="email"
+            fullWidth
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Password"
+            variant="outlined"
+            type="password"
+            fullWidth
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">Gender</InputLabel>
+            <Select
+              labelId="gender-label"
               name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              label="Gender"
               required
-              value={gender}
-              onChange={handleGenderChange}
-              
-              >
-              <option value="" disabled >
+            >
+              <MenuItem value="" disabled>
                 Select your gender
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Date of Birth</label>
-            <input
-              className='signUpInputStyle'
-              type="date"
-              id="date"
-              name="date"
-              required
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >City</label>
-            <input
-              type="text"
-              className='signUpInputStyle'
-              id="city"
-              name="city"
-              required
-              placeholder="Enter your city"
-            />
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Address</label>
-            <input
-              id="address"
-              name="address"
-              className='signUpInputStyle'
-              placeholder="Enter your address"
-            ></input>
-          </div>
-          <div className="input-group">
-            <label className="labelInput" >Role</label>
-            <select  
-              id="role"
+              </MenuItem>
+              <MenuItem value="male">Male</MenuItem>
+              <MenuItem value="female">Female</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item size={6}>
+          <FormControl fullWidth>
+            <InputLabel id="role-label">Role</InputLabel>
+            <Select
+              labelId="role-label"
               name="role"
+              value={formData.role}
+              onChange={handleChange}
+              label="Role"
               required
-              value={role}
-              onChange={handleRoleChange}
-              
-              >
-              <option value="" disabled >
+            >
+              <MenuItem value="" disabled>
                 Select your Role
-              </option>
-              <option value="fan">Fan</option>
-              <option value="manager">Manager</option>
-            </select>
-          </div>
-        <div className="button-container">
-             <button className='signButton' onClick={() => handleSignUpClick('SignUp')}>SignUp</button>
-        </div>
-    </div>
+              </MenuItem>
+              <MenuItem value="fan">Fan</MenuItem>
+              <MenuItem value="manager">Manager</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Date of Birth"
+            variant="outlined"
+            type="date"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            name="dateOfBirth"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="City"
+            variant="outlined"
+            fullWidth
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            required
+          />
+        </Grid>
+
+        <Grid item size={6}>
+          <TextField
+            label="Address"
+            variant="outlined"
+            fullWidth
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+          />
+        </Grid>
+      </Grid>
+
+      <Button
+        variant="contained"
+        color="primary"
+        size="large"
+        sx={{ marginTop: '16px' }}
+        onClick={handleSignUpClick}
+      >
+        Sign Up
+      </Button>
+    </Box>
   );
 };
 
