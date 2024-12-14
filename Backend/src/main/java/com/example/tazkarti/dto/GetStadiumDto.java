@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Value;
 
 @Value
-public class TeamDto {
-    @NotBlank(message = "Team name can't be empty")
+public class GetStadiumDto {
+    private Long id;
     private String name;
 }
