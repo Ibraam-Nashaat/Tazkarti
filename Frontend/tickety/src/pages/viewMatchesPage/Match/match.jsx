@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./match.css";
-import Button from "@mui/material/Button";
 import LocationOnIcon from "@mui/icons-material/LocationOnOutlined";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 const Match = ({
@@ -12,10 +11,10 @@ const Match = ({
   ticketPrice,
   awayTeam,
   homeTeam,
-  stadium
+  stadium,
+  onClick
 }
 ) => {
-  const handleBookMatch = () => {};
   const formatDateTime = (dateTime) => {
     const [date, time] = dateTime.split("T"); // Split by 'T'
     return { date, time };
@@ -23,7 +22,7 @@ const Match = ({
 
   const { date, time } = formatDateTime(dateTime);
   return (
-    <div className="match-container">
+    <div className="match-container " onClick={onClick}>
         <div className="team-info">
       <div className="team-name-first">{homeTeam}</div>
       <div className="team-seperator">vs</div>

@@ -1,36 +1,63 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Make sure html and body take the full height */
+}
+
 .viewmatch {
   display: flex;
   flex-direction: row;
+  background-color: #eee ;
+  height: 100%;
+  /* position: absolute; */
 }
+/* .viewmatch :hover{
+  cursor: pointer;
+  background-color: red;
+} */
 .viewmatch .matches-container {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%); /* Only center vertically */
+  /* position: absolute;  */
+  /* top: 50%;  */
+  /* left: 0;  */
+  /* transform: translateY(-50%); Only center vertically */
   background-color: #eee;
   padding: 13px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  width: 50%;
+  width: 60%;
   display: flex;
   flex-direction: column;
-  flex: 0.8;
+  flex: 0.65;
   height: 90%; /* Ensure the root elements take up full height */
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  height: 100%;
+  height: 100%; 
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  overflow-x: hidden;
   /* scrollbar-width: none; */
 }
 .viewmatch .image-container {
   text-align: right;
+  border: 5px solid red;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.viewmatch .image-container .image-rapper{
+  /* text-align: right; */
+  border: 30px solid red;
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
-.viewmatch .image-container img {
+
+.viewmatch .image-container .image-rapper img {
   max-width: 20%;
   flex: 0.2;
-  margin-right: 50px;
+  margin-right: 80px;
   height: auto;
+  /* justify-self: center; */
 }
 
 .viewmatch .matches-container h2 {
@@ -39,4 +66,66 @@
   margin-bottom: 15px;
   font-weight: bold;
   color: #000000;
+}
+.image-container .clicked-match-details{
+  background-color: white;
+  /* position: absolute; */
+}
+
+/* Selected match details container */
+.clicked-match-details {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  flex: 0.35;
+  align-items: start;
+  /* align-items: flex-start;  */
+  /* justify-content: flex-start;  */
+}
+
+.clicked-match-details h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #444;
+}
+
+.clicked-match-details p {
+  margin: 10px 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.clicked-match-details strong {
+  color: #555;
+  font-weight: bolder;
+}
+.clicked-match-details .book-button {
+  outline: none !important;
+  background-color: green !important;
+  color: white !important;
+  font-weight: 550 !important;
+  font-size: 15px !important;
+  /* height: 40px !important; */
+  /* border-radius: 30px !important; */
+  border: none !important;
+  /* text-transform: inherit !important; */
+  padding: 0px 15px !important;
+  width: 175px !important;
+  height: 40px;
+  align-self: flex-end;
+  /* margin-left: auto !important; */
+  /* margin-top: 10px !important; */
+}
+
+.clicked-match-details .book-button:hover {
+  background-color: rgb(2, 74, 2) !important;
+}
+.clicked-match-details .space-wrapper{
+  height: 60px;
 }

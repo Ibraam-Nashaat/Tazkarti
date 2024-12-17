@@ -9,7 +9,27 @@
     display: flex;
     /* flex-direction: column; */
     align-items: center;
-    width: 100%;
+    /* width: 100%; */
+    box-sizing: border-box !important  ; /* Prevents padding from affecting total width */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.match-container > * {
+    pointer-events: none; /* Prevent hover from applying to children */
+  }
+@media (max-width: 600px) {
+    .match-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .match-info {
+        margin-top: 10px;
+    }
+}
+.match-container:hover{
+    /* border: 5px solid red; */
+    cursor: pointer;
+    background-color: #e7dede; /* Light gray hover effect for a clean look */
+    transform: scale(1.02); /* Slight zoom effect for interaction */
 }
 .match-container .team-info{
     display: flex;
@@ -20,7 +40,7 @@
 .match-container .match-info{
     display: flex;
     flex-direction: row;
-    flex-grow: 0.3;
+    flex-grow: 1;
 }
 .match-info .location-container{
     display: flex;
@@ -78,6 +98,6 @@
     margin-top: 10px !important;
   }
 
-.match-container .book-button:hover {
+/* .match-container .book-button:hover {
     background-color: rgb(2, 74, 2) !important;
-  }
+  } */
