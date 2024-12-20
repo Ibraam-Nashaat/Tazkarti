@@ -83,6 +83,19 @@ export default function NavBar() {
                 Users
               </Typography>
             )}
+             {role === 'MANAGER' && (
+              <Typography
+                variant="h6"
+                sx={{
+                  color: 'white',
+                  cursor: 'pointer',
+                  marginRight: '30px',
+                }}
+                onClick={() => navigate('/addmatch')} // Navigate to users page
+              >
+                Add Match
+              </Typography>
+            )}
 
             {/* User Account Circle - Show only if logged in */}
             {isLoggedIn ? (

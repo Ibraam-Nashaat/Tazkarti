@@ -30,6 +30,8 @@ const SignInPage = () => {
       const response = await authService.signIn(formData);
       if (response.role === 'ADMIN') {
         navigate('/users');
+      } else if (response.role === 'MANAGER') {
+        navigate('/addmatch');
       } else navigate('/');
       // Redirect or perform other actions on success
     } catch (error) {
@@ -105,8 +107,7 @@ const SignInPage = () => {
 
         {/* Non-clickable "Don't have an account?" text */}
         <Typography variant="body2" sx={{ marginTop: '8px' }}>
-          Don't have an account?{' '}
-          {/* Only the Sign Up text is clickable */}
+          Don't have an account? {/* Only the Sign Up text is clickable */}
           <Typography
             variant="body2"
             component="span"
