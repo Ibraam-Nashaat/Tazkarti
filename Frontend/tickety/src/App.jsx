@@ -13,6 +13,7 @@ import PrivateRoute from "./privateRoute/PrivateRoute";
 import Unauthorized from "./unAuthorized/Unauthorized";
 import EditFanProfilePage from './pages/EditFanProfilePage';
 import AddStadiumPage from './pages/AddStadiumPage';
+import EditMatch from "./pages/editMatchPage/editMatch";
 function App() {
   return (
     <>
@@ -28,6 +29,14 @@ function App() {
             element={
               <PrivateRoute>
                 <AddMatch />
+              </PrivateRoute>
+            }
+          />
+            <Route
+            path="/editMatch"
+            element={
+              <PrivateRoute>
+                <EditMatch />
               </PrivateRoute>
             }
           />
