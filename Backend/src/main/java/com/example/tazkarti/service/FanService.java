@@ -1,6 +1,7 @@
 package com.example.tazkarti.service;
 
 import com.example.tazkarti.dto.EditUserProfileDto;
+import com.example.tazkarti.dto.GetUserDto;
 import com.example.tazkarti.dto.SeatReservationDto;
 import com.example.tazkarti.dto.TicketDto;
 import com.example.tazkarti.entity.AppUser;
@@ -8,6 +9,7 @@ import com.example.tazkarti.entity.CreditCard;
 import com.example.tazkarti.entity.Match;
 import com.example.tazkarti.entity.Ticket;
 import com.example.tazkarti.enums.AccountStatus;
+import com.example.tazkarti.mapper.GetUserMapper;
 import com.example.tazkarti.mapper.TicketMapper;
 import com.example.tazkarti.repository.AppUserRepository;
 import com.example.tazkarti.repository.CreditCardRepository;
@@ -38,10 +40,20 @@ public class FanService {
     private CreditCardRepository creditCardRepository;
 
     @Autowired
+    private GetUserMapper getUserMapper;
+
+    @Autowired
     private TicketMapper ticketMapper;
     BCryptPasswordEncoder passwordEncoder;
     public FanService(){
         passwordEncoder= new BCryptPasswordEncoder();
+    }
+    public GetUserDto getUserById(Long userId){
+        Optional<AppUser> user = appUserRepository.findById(userId);
+        if(user.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"user id not found");
+        }
+        return getUserMapper.toDto(user.get());
     }
     public List<TicketDto> getAllTickets(Long fanId){
         Optional<AppUser> fan = appUserRepository.findById(fanId);

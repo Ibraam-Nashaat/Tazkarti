@@ -124,6 +124,11 @@ export default function NavBar() {
                   open={Boolean(anchorEl)}
                   onClose={() => setAnchorEl(null)}
                 >
+                  {role == 'FAN' && (
+                    <MenuItem onClick={() => navigate('/profile')}>
+                      Edit Profile
+                    </MenuItem>
+                  )}
                   <MenuItem onClick={handleLogout}>Log out</MenuItem>
                 </Menu>
               </>

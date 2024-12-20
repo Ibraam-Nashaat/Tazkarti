@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   TextField,
@@ -11,8 +11,10 @@ import {
 } from '@mui/material';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link here
 import Grid from '@mui/material/Grid2';
-import AuthService from '../services/AuthService';
 import NavBar from '../components/Navbar';
+import FanService from '../services/FanService';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 
 const EditFanProfilePage = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +30,8 @@ const EditFanProfilePage = () => {
     address: '',
     role: '',
   });
-  const [error, setError] = useState(null); // State to store error message
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate(); // useNavigate hook for navigation
 
   const handleChange = (e) => {
@@ -36,8 +39,33 @@ const EditFanProfilePage = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const authService = new AuthService();
-
+  const fanService = new FanService();
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const profileData = await fanService.getProfileData();
+        setFormData({
+          username: profileData.username || '',
+          firstName: profileData.firstName || '',
+          lastName: profileData.lastName || '',
+          email: profileData.email || '',
+          password: '', // Keep password fields empty
+          confirmPassword: '',
+          gender: profileData.gender || '',
+          dateOfBirth: profileData.birthDate || '', // Use the date directly
+          city: profileData.city || '',
+          address: profileData.address || '',
+          role: profileData.role || '',
+        });
+      } catch (err) {
+        setError('Failed to load data');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
   // Validation function
   const validateForm = () => {
     // Check if all required fields are filled
@@ -62,10 +90,24 @@ const EditFanProfilePage = () => {
     if (!validateForm()) {
       return; // If validation fails, don't proceed
     }
+    const formattedDate = new Date(formData.dateOfBirth)
+      .toISOString()
+      .split('T')[0]; // yyyy-mm-dd format
+
+    const profileData = {
+      password: formData.password,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      gender: formData.gender,
+      city: formData.city,
+      address: formData.address,
+      birthDate: formattedDate,
+    };
 
     try {
-      const response = await authService.signUp(formData);
-      navigate('/signin'); 
+      const response = await fanService.editProfileData(profileData);
+      toast.success('User profile updated successfully');
+      setError('');
     } catch (error) {
       setError(error.message);
     }
@@ -90,6 +132,8 @@ const EditFanProfilePage = () => {
           marginTop: '160px',
         }}
       >
+        <ToastContainer position="top-right" autoClose={3000} />
+
         <Typography
           variant="h4"
           gutterBottom
@@ -262,7 +306,6 @@ const EditFanProfilePage = () => {
         >
           Edit
         </Button>
-
       </Box>
     </>
   );
