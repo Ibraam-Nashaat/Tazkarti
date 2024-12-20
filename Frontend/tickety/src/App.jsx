@@ -8,6 +8,8 @@ import EditData from './pages/editDataPage/editData';
 import AddMatch from './pages/addMatchPage/addMatchPage';
 import ViewMatchPage from './pages/viewMatchesPage/ViewMatchPage';
 import UserListPage from './pages/ViewUsersPage';
+import EditFanProfilePage from './pages/EditFanProfilePage';
+import AddStadiumPage from './pages/AddStadiumPage';
 function App() {
   return (
     <>
@@ -20,7 +22,8 @@ function App() {
           <Route path="/addmatch" element={<AddMatch />} />
           <Route path="/viewmatch" element={<ViewMatchPage />} />
           <Route path="/users" element={<UserListPage />} />
-
+          <Route path="/profile" element={<EditFanProfilePage />} />
+          <Route path="/addStadium" element={<AddStadiumPage />} />
         </Routes>
       </Router>
     </>

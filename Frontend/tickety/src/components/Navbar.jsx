@@ -83,7 +83,7 @@ export default function NavBar() {
                 Users
               </Typography>
             )}
-             {role === 'MANAGER' && (
+            {role === 'MANAGER' && (
               <Typography
                 variant="h6"
                 sx={{
@@ -94,6 +94,19 @@ export default function NavBar() {
                 onClick={() => navigate('/addmatch')} // Navigate to users page
               >
                 Add Match
+              </Typography>
+            )}
+            {role === 'MANAGER' && (
+              <Typography
+                variant="h6"
+                sx={{
+                  color: 'white',
+                  cursor: 'pointer',
+                  marginRight: '30px',
+                }}
+                onClick={() => navigate('/addStadium')} // Navigate to users page
+              >
+                Add Stadium
               </Typography>
             )}
 
