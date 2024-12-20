@@ -109,6 +109,19 @@ export default function NavBar() {
                 Add Stadium
               </Typography>
             )}
+            {role === 'FAN' && (
+              <Typography
+                variant="h6"
+                sx={{
+                  color: 'white',
+                  cursor: 'pointer',
+                  marginRight: '30px',
+                }}
+                onClick={() => navigate('/tickets')} // Navigate to users page
+              >
+                Tickets
+              </Typography>
+            )}
 
             {/* User Account Circle - Show only if logged in */}
             {isLoggedIn ? (

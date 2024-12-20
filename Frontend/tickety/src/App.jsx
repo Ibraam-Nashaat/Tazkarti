@@ -14,6 +14,7 @@ import Unauthorized from "./unAuthorized/Unauthorized";
 import EditFanProfilePage from './pages/EditFanProfilePage';
 import AddStadiumPage from './pages/AddStadiumPage';
 import EditMatch from "./pages/editMatchPage/editMatch";
+import ViewTickets from "./pages/ViewTickets";
 function App() {
   return (
     <>
@@ -46,6 +47,7 @@ function App() {
           <Route path="/users" element={<UserListPage />} />
           <Route path="/profile" element={<EditFanProfilePage />} />
           <Route path="/addStadium" element={<AddStadiumPage />} />
+          <Route path="/tickets" element={<ViewTickets />} />
         </Routes>
       </Router>
     </>
