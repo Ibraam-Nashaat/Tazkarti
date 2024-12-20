@@ -1,0 +1,83 @@
+.dialog {
+    position: absolute;
+    top:55%;
+    left:0; 
+    transform: translateY(-50%); /* Only center vertically */
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 49%; }
+
+  .labelDataMatch {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+    float: left;
+  }
+  
+  .image-container {
+    text-align: right;
+}
+
+.image-container img {
+    max-width: 35%;
+    margin-right: 50px;
+    height: auto;
+}
+  
+  h2 {
+    margin: 0; 
+    font-size: 25px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #000000;
+  }
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  select{
+    width: 95%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+  }
+
+  .InputStyle {
+    width: 90%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  
+  button {
+    padding: 10px 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: #1f2123;
+    color: white;
+    cursor: pointer;
+  }
+  .error {
+    color: red;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+  

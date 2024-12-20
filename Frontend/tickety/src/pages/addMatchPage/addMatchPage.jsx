@@ -35,6 +35,7 @@ const AddMatch = () => {
       setLoading(true);
       try {
         const teamData = await matchService.getAllTeams();
+        console.log("team data is in addMatch page",teamData);
         const stadiumData = await matchService.getAllStadiums();
         setTeams(teamData);
         setStadiums(stadiumData);
