@@ -5,9 +5,12 @@ import logo from "../../assets/black_on_trans.png";
 import apiGetMatches from "../../apis/MatchApis/getMatches";
 import Button from "@mui/material/Button";
 import Match from "./Match/match";
+import NavBar from '../../components/Navbar';
+import { useNavigate } from "react-router-dom";
 const ViewMatchPage = () => {
   const [matches, setMatches] = useState([]);
   const [clickedMatch, setClickedMatch] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchMatches = async () => {
       try {
@@ -21,6 +24,10 @@ const ViewMatchPage = () => {
     fetchMatches();
     // console.log('these are the Matches: ', matches);
   }, []);
+  const handleEditMatch = () => {
+    const probeData = { clickedMatch };
+    navigate("/editMatch", { state: probeData }); // Pass the probe in the state
+  };
   const handleBookMatch = () => {
 
   };
@@ -28,6 +35,8 @@ const ViewMatchPage = () => {
     setClickedMatch(match);
   };
   return (
+      <>
+     <NavBar />
     <div className="viewmatch">
       <div className="matches-container">
         {matches.map((match) => (
@@ -80,10 +89,21 @@ const ViewMatchPage = () => {
         onClick={handleBookMatch}
       >
         Book Ticket
-      </Button> 
+      </Button>
+      { localStorage.getItem('role')=='MANAGER' ? (
+        <>
+        <div style={{height: '20px'}}></div>
+        <Button
+        className="book-button"
+        onClick={handleEditMatch}
+      >
+        Edit Match
+      </Button>
+      </>) :null }  
           </div>
         )}
       </div>
+      </>
   );
 };
 
