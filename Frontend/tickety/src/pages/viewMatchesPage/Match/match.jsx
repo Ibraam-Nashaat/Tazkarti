@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import "./match.css";
-import LocationOnIcon from "@mui/icons-material/LocationOnOutlined";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import LocationOnIcon from '@mui/icons-material/LocationOnOutlined';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+
 const Match = ({
   id,
   dateTime,
@@ -12,48 +14,60 @@ const Match = ({
   awayTeam,
   homeTeam,
   stadium,
-  onClick
-}
-) => {
+  onClick,
+}) => {
   const formatDateTime = (dateTime) => {
-    const [date, time] = dateTime.split("T"); // Split by 'T'
+    const [date, time] = dateTime.split('T'); // Split by 'T'
     return { date, time };
   };
 
   const { date, time } = formatDateTime(dateTime);
   return (
-    <div className="match-container " onClick={onClick}>
-        <div className="team-info">
-      <div className="team-name-first">{homeTeam}</div>
-      <div className="team-seperator">vs</div>
-      <div className="team-name-second">{awayTeam}</div>
-      </div>
-      <div className="match-info">
-        <div className="location-container">
-        <div className="location-icon">
-        <LocationOnIcon className="icon"/>
-        </div>
+    <Box
+      sx={{
+        border: '1px solid #ccc',
+        borderRadius: '8px',
+        padding: '16px',
+        marginBottom: '16px',
+        cursor: 'pointer',
+        backgroundColor: '#f9f9f9',
+        '&:hover': {
+          backgroundColor: '#f0f0f0',
+        },
+      }}
+      onClick={onClick}
+    >
+      <Box textAlign="center" mb={2}>
+        <Typography variant="h6" component="div">
+          {homeTeam} vs {awayTeam}
+        </Typography>
+      </Box>
 
-        <div className="stadium-container">{stadium}</div>
-        </div>
-        <div className="date-container">
-            <div className="date-icon">
-                <CalendarMonthIcon className="icon"/>
-            </div>
-            <div className="dt-wrapper">
-            <div className="date">{date}</div>
-            <div className="time">Time: {time}</div>
-            </div>
-        </div>
-        <div className="date-container"></div>
-      </div>
-      {/* <Button
-        className="book-button"
-        onClick={handleBookMatch}
+      <Grid
+        container
+        spacing={2}
+        alignItems="center"
+        justifyContent="space-between"
       >
-        Book Ticket
-      </Button> */}
-    </div>
+        <Grid item display="flex" alignItems="center">
+          <LocationOnIcon color="action" sx={{ marginRight: 1 }} />
+          <Typography variant="body1">{stadium}</Typography>
+        </Grid>
+
+        <Grid item display="flex" alignItems="center">
+          <CalendarMonthIcon color="action" sx={{ marginRight: 1 }} />
+          <Box>
+            <Typography variant="body1" textAlign="right">
+              {date}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" textAlign="right">
+              Time: {time}
+            </Typography>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
+
 export default Match;
