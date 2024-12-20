@@ -15,7 +15,8 @@ import MatchService from '../../services/MatchService';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import NavBar from '../../components/Navbar';
-import { useLocation } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
+import ManagerService from '../../services/ManagerService';
 const EditMatch = () => {
   const [homeTeam, setHomeTeam] = useState('');
   const [awayTeam, setAwayTeam] = useState('');
@@ -30,18 +31,26 @@ const EditMatch = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const matchService = new MatchService();
-  const location=useLocation();
-  const match=location.state;
+  const managerService = new ManagerService();
+  const location = useLocation();
+  const match = location.state.clickedMatch;
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
+        setDateTime(match.dateTime);
+        setHomeTeam(match.homeTeamName);
+        setAwayTeam(match.awayTeamName);
+        setFirstLinesman(match.firstLinesman);
+        setSecondLinesman(match.secondLinesman);
+        setMainReferee(match.mainReferee);
+        setStadium(match.stadiumName);
+        setTicketPrice(match.ticketPrice);
         const teamData = await matchService.getAllTeams();
-        console.log("team data is in addMatch page",teamData);
         const stadiumData = await matchService.getAllStadiums();
         setTeams(teamData);
         setStadiums(stadiumData);
-        console.log("inside the edit match page here is the selected match",match);
       } catch (err) {
         setError('Failed to load data');
       } finally {
@@ -94,8 +103,8 @@ const EditMatch = () => {
       ticketPrice,
     };
     try {
-      const response = await matchService.addMatch(matchDetails);
-      toast.success('Match added successfully!');
+      const response = await managerService.editMatch(match.matchId, matchDetails);
+      toast.success('Match updated successfully!');
       setError('');
     } catch (error) {
       setError(error.message);
@@ -258,7 +267,7 @@ const EditMatch = () => {
               sx={{ mr: 2, backgroundColor: '#2e7d32' }}
               onClick={handleSubmit}
             >
-              Confirm
+              Edit
             </Button>
           </Box>
         </form>
