@@ -31,7 +31,7 @@ function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/editdata" element={<EditData />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
-          <Route path="/reserveMatch" element={<SeatReservation />} />
+          <Route path="/reservematch" element={<SeatReservation />} />
           <Route
             path="/AddMatch"
             element={
