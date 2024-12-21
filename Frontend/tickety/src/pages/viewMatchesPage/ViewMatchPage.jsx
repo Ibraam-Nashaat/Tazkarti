@@ -27,15 +27,13 @@ const ViewMatchPage = () => {
   }, []);
 
   const handleEditMatch = () => {
-    if (clickedMatch) {
-      const probeData = { clickedMatch };
-      navigate('/editMatch', { state: probeData });
-    }
+    const probeData = { clickedMatch };
+    navigate("/editmatch", { state: probeData }); // Pass the probe in the state
   };
 
   const handleBookMatch = () => {
-    console.log('Booking match:', clickedMatch);
-    // Add booking logic here
+    const probeData = { clickedMatch };
+    navigate("/reservematch", { state: probeData }); // Pass the probe in the state
   };
 
   const handleMatchClick = (match) => {
