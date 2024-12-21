@@ -12,12 +12,12 @@ import MatchService from '../../services/MatchService';
 function SeatReservation() {
   const location = useLocation();
   //   const location = useLocation();
-  const [match, setMatch] = useState(location.state || null); // Initialize with a safe default
+  const [match, setMatch] = useState(location.state.clickedMatch || null); // Initialize with a safe default
   // Extract properties from match
-  const seatRows = match.clickedMatch.seatRows;
-  const seatsPerRow = match.clickedMatch.seatsPerRow;
+  const seatRows = match.seatRows;
+  const seatsPerRow = match.seatsPerRow;
   function convertReservedSeats(reservedSeats, seatsPerRow) {
-    console.log(match.clickedMatch.reservedSeats, reservedSeats);
+    console.log(match.reservedSeats, reservedSeats);
     return reservedSeats.map((seatNumber) => {
       const row = Math.ceil(seatNumber / seatsPerRow); // Calculate row number
       const seat = seatNumber % seatsPerRow; // Calculate seat number in the row
@@ -25,7 +25,7 @@ function SeatReservation() {
     });
   }
   const [reservedSeats, setReservedSeats] = useState(
-    convertReservedSeats(match.clickedMatch.reservedSeats, seatsPerRow)
+    convertReservedSeats(match.reservedSeats, seatsPerRow)
   );
   const seats = generateSeats(seatRows, seatsPerRow);
 
@@ -33,23 +33,29 @@ function SeatReservation() {
     seats.filter((seat) => !reservedSeats.includes(seat))
   );
   useEffect(() => {
-    console.log('This is the inside Seat Reservation', match);
-    console.log(
-      'This is the inside Seat Reservation reserved seats are',
-      reservedSeats
-    );
     const fetchMatchData = async () => {
       try {
         const matchService = new MatchService();
-        console.log('match id is', match.clickedMatch.matchId);
+        console.log('Match ID is', match.matchId);
+        const id = match.matchId;
         const matchData = await matchService.getMatchById(id);
+        console.log('Fetched match data:', matchData);
+  
         setMatch(matchData);
-        // setMatch(matchService.getMatchById(id));
+  
+        // Update reservedSeats with the new seat
+        const seatNumber = matchData.reservedSeats[matchData.reservedSeats.length - 1];
+        const row = Math.ceil(seatNumber / seatsPerRow); // Calculate row number
+        const seat = seatNumber % seatsPerRow; // Calculate seat number in the row
+        setReservedSeats((prevReserved) => [...prevReserved, `R${row}-S${seat}`]);
       } catch (error) {
-        console.error('Error ', error);
+        console.error('Error fetching match data:', error);
       }
     };
-  }, []);
+  
+    fetchMatchData();
+  }, []); // Add dependencies to ensure proper reactivity
+  
   const [seatReserved, setSeatReserved] = React.useState([]);
   const [selectedSeat, setSelectedSeat] = useState(null);
 
@@ -94,7 +100,7 @@ function SeatReservation() {
       <div>
         <h1>Seat Reservation System</h1>
         <h2>
-          {match.clickedMatch.homeTeamName} vs {match.clickedMatch.awayTeamName}
+          {match.homeTeamName} vs {match.awayTeamName}
         </h2>
         <DrawGrid
           seats={seats}
@@ -168,14 +174,21 @@ function DrawGrid({
     }
     const { rowIndex, seatIndex } = getRowAndSeat(selectedSeat);
     const seatDetails = {
-      matchId: match.clickedMatch.matchId,
-      seatNumber: (rowIndex - 1) * match.clickedMatch.seatsPerRow + seatIndex,
+      matchId: match.matchId,
+      seatNumber: (rowIndex - 1) * match.seatsPerRow + seatIndex,
       creditCardNumber: creditCardNumber,
       pinNumber: pin,
     };
     try {
       const response = await fanService.addReservation(seatDetails);
-      setReservedSeats([...reserved, `R${rowIndex}-S${seatIndex}`]);
+      const handleReservation = (rowIndex, seatIndex) => {
+        setReservedSeats((prevReserved) => {
+          // Create a new array with the updated reserved seats
+          const newReservedSeats = [...prevReserved, `R${rowIndex}-S${seatIndex}`];
+          return newReservedSeats; // Return the new array
+        });
+      };
+      handleReservation(rowIndex,seatIndex);
       setSelectedSeat(null);
       toast.success('Reservation added successfully!');
       setError('');
