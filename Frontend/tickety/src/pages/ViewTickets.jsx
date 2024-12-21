@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import FanService from '../services/FanService';
 import Match from './viewMatchesPage/Match/match';
 import NavBar from '../components/Navbar';
@@ -10,6 +10,7 @@ const ViewTickets = () => {
   const [tickets, setTickets] = useState([]);
   const [clickedTicket, setClickedTicket] = useState(null);
   const navigate = useNavigate();
+  const [error, setError] = useState('');
   const fanService = new FanService();
   useEffect(() => {
     const fetchTickets = async () => {
@@ -46,7 +47,7 @@ const ViewTickets = () => {
       try {
         await fanService.cancelReservation(clickedTicket.ticketId);
       } catch (error) {
-        console.error('Error in cancel reservation:', error);
+        setError(error.message);
       }
     };
     cancelReservation();
@@ -133,6 +134,15 @@ const ViewTickets = () => {
                 <strong>Ticket Price:</strong> ${clickedTicket.ticketPrice}
               </p>
               <div className="space-wrapper"></div>
+              {error && (
+                <Typography
+                  sx={{ marginLeft: '100px' }}
+                  variant="body2"
+                  color="error"
+                >
+                  {error}
+                </Typography>
+              )}
               <Button
                 variant="contained"
                 color="success"

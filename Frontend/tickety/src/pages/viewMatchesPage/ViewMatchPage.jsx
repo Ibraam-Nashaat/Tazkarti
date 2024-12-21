@@ -28,12 +28,12 @@ const ViewMatchPage = () => {
 
   const handleEditMatch = () => {
     const probeData = { clickedMatch };
-    navigate("/editmatch", { state: probeData }); // Pass the probe in the state
+    navigate('/editmatch', { state: probeData }); // Pass the probe in the state
   };
 
   const handleBookMatch = () => {
     const probeData = { clickedMatch };
-    navigate("/reservematch", { state: probeData }); // Pass the probe in the state
+    navigate('/reservematch', { state: probeData }); // Pass the probe in the state
   };
 
   const handleMatchClick = (match) => {
@@ -118,9 +118,11 @@ const ViewMatchPage = () => {
                 <strong>Ticket Price:</strong> ${clickedMatch.ticketPrice}
               </p>
               <div className="space-wrapper"></div>
-              <Button className="book-button" onClick={handleBookMatch}>
-                Book Ticket
-              </Button>
+              {localStorage.getItem('role') === 'FAN' && (
+                <Button className="book-button" onClick={handleBookMatch}>
+                  Book Ticket
+                </Button>
+              )}
               {localStorage.getItem('role') === 'MANAGER' && (
                 <Button
                   className="book-button"
