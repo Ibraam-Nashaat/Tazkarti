@@ -118,6 +118,11 @@ const ViewMatchPage = () => {
                 <strong>Ticket Price:</strong> ${clickedMatch.ticketPrice}
               </p>
               <div className="space-wrapper"></div>
+              {localStorage.getItem('role') === 'MANAGER' && (
+                <Button className="book-button" onClick={handleBookMatch}>
+                  View Seats
+                </Button>
+              )}
               {localStorage.getItem('role') === 'FAN' && (
                 <Button className="book-button" onClick={handleBookMatch}>
                   Book Ticket
