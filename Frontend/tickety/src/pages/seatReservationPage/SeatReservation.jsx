@@ -8,10 +8,11 @@ import Button from "@mui/material/Button";
 import CreditCardModal from "../../components/CreditCardModal ";
 import { useState } from "react";
 import FanService from "../../services/FanService";
+import MatchService from "../../services/MatchService";
 function SeatReservation() {
   const location = useLocation();
-  const match = location.state; // Get match data from useLocation
-
+//   const location = useLocation();
+  const [match, setMatch] = useState(location.state || null); // Initialize with a safe default
   // Extract properties from match
   const seatRows = match.clickedMatch.seatRows;
   const seatsPerRow = match.clickedMatch.seatsPerRow;
@@ -32,7 +33,18 @@ function SeatReservation() {
   useEffect(() => {
     console.log("This is the inside Seat Reservation", match);
     console.log("This is the inside Seat Reservation reserved seats are", reservedSeats);
-  }, []);
+    const fetchMatchData = async () => {
+        try{
+    const matchService=new MatchService();
+    console.log("match id is",(match.clickedMatch.matchId));
+    const matchData = await matchService.getMatchById(id);
+    setMatch(matchData);
+    // setMatch(matchService.getMatchById(id));    
+}
+catch(error){
+    console.error("Error ",error);
+}
+}}, []);   
   const [seatReserved, setSeatReserved] = React.useState([]);
   const [selectedSeat, setSelectedSeat] = useState(null);
 

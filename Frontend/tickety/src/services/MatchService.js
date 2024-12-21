@@ -85,5 +85,29 @@ class MatchService {
       throw error; // Throw the error to be handled in the component
     }
   }
+  async getMatchById(matchId) {
+    const userId = localStorage.getItem('userID');
+    const accessToken = localStorage.getItem('accessToken'); // Retrieve the access token
+    console.log('hello');
+    const response = await fetch(`${API_BASE_URL}/matches/${matchId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response);
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.log(errorData);
+      const firstError = Object.entries(errorData)[0];
+      throw new Error(
+        firstError ? `${firstError[1]}` : 'Something went wrong!'
+      );
+    }
+
+    const data = await response.json();
+    return data;
+  }
 }
 export default MatchService;
