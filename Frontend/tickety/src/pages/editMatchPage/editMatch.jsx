@@ -90,20 +90,21 @@ const EditMatch = () => {
       return;
     }
 
-    const formattedDateTime = new Date(dateTime).toISOString().slice(0, 19);
-
     const matchDetails = {
       homeTeamId,
       awayTeamId,
       stadiumId,
-      dateTime: formattedDateTime,
+      dateTime,
       mainReferee,
       firstLinesman,
       secondLinesman,
       ticketPrice,
     };
     try {
-      const response = await managerService.editMatch(match.matchId, matchDetails);
+      const response = await managerService.editMatch(
+        match.matchId,
+        matchDetails
+      );
       toast.success('Match updated successfully!');
       setError('');
     } catch (error) {

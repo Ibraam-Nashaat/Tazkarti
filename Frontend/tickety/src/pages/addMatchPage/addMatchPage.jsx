@@ -35,7 +35,7 @@ const AddMatch = () => {
       setLoading(true);
       try {
         const teamData = await matchService.getAllTeams();
-        console.log("team data is in addMatch page",teamData);
+        console.log('team data is in addMatch page', teamData);
         const stadiumData = await matchService.getAllStadiums();
         setTeams(teamData);
         setStadiums(stadiumData);
@@ -77,14 +77,11 @@ const AddMatch = () => {
       setError('Invalid selections. Please try again.');
       return;
     }
-
-    const formattedDateTime = new Date(dateTime).toISOString().slice(0, 19);
-
     const matchDetails = {
       homeTeamId,
       awayTeamId,
       stadiumId,
-      dateTime: formattedDateTime,
+      dateTime,
       mainReferee,
       firstLinesman,
       secondLinesman,
