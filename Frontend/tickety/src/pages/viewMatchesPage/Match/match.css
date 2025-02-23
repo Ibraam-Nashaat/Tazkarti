@@ -1,0 +1,103 @@
+.match-container{
+    border-bottom: 2px dotted black;
+    background-color: white;
+    color: black;
+    /* padding: 0 16px; */
+    padding: 13px;
+    /* width :598px; */
+    /* padding-bottom: 10px; */
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    /* width: 100%; */
+    box-sizing: border-box !important  ; /* Prevents padding from affecting total width */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.match-container > * {
+    pointer-events: none; /* Prevent hover from applying to children */
+  }
+@media (max-width: 600px) {
+    .match-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .match-info {
+        margin-top: 10px;
+    }
+}
+.match-container:hover{
+    /* border: 5px solid red; */
+    cursor: pointer;
+    background-color: #e7dede; /* Light gray hover effect for a clean look */
+    transform: scale(1.02); /* Slight zoom effect for interaction */
+}
+.match-container .team-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-grow: 1    ;
+}
+.match-container .match-info{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+}
+.match-info .location-container{
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+}
+.dt-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.match-info .date-container{
+    display: flex;
+    flex-direction: row;
+    /* flex-grow: 0.5; */
+    /* flex-grow: 1; */
+    align-items: center;
+}
+.team-info .team-seperator{
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 16px;
+    color: #898686f6;
+}
+.match-info .icon{
+    font-weight: lighter;
+    color: #898686f6;
+  }
+.team-info .team-name-first{
+    font-weight: bolder;
+    font-size: 18px;
+    margin-right:5px;
+}
+.team-info .team-name-second{
+    font-weight: bolder;
+    font-size: 18px;
+    margin-left:5px;
+}
+.match-container .book-button {
+    outline: none !important;
+    background-color: green !important;
+    color: white !important;
+    font-weight: 550 !important;
+    font-size: 15px !important;
+    /* height: 40px !important; */
+    /* border-radius: 30px !important; */
+    border: none !important;
+    text-transform: inherit !important;
+    padding: 0px 15px !important;
+    width: 175px !important;
+    height: 40px;
+    margin-left: auto !important;
+    margin-top: 10px !important;
+  }
+
+/* .match-container .book-button:hover {
+    background-color: rgb(2, 74, 2) !important;
+  } */

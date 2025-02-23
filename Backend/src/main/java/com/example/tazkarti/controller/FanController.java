@@ -1,9 +1,6 @@
 package com.example.tazkarti.controller;
 
-import com.example.tazkarti.dto.EditUserProfileDto;
-import com.example.tazkarti.dto.GeneralResponseDto;
-import com.example.tazkarti.dto.SeatReservationDto;
-import com.example.tazkarti.dto.TicketDto;
+import com.example.tazkarti.dto.*;
 import com.example.tazkarti.service.FanService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -24,6 +21,11 @@ public class FanController {
         Long fanId = (Long)request.getAttribute("userId");
         fanService.editProfileData(fanId,editUserProfileDto);
         return ResponseEntity.ok(new GeneralResponseDto("User profile data updated successfully"));
+    }
+    @GetMapping({"/{fanId}"})
+    public ResponseEntity<GetUserDto> getProfileData(HttpServletRequest request){
+        Long fanId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(fanService.getUserById(fanId));
     }
 
     @PostMapping({"/{fanId}/reserveSeat"})

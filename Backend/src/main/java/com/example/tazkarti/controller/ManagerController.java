@@ -1,15 +1,14 @@
 package com.example.tazkarti.controller;
 
-import com.example.tazkarti.dto.GeneralResponseDto;
-import com.example.tazkarti.dto.MatchDto;
-import com.example.tazkarti.dto.StadiumDto;
-import com.example.tazkarti.dto.TeamDto;
+import com.example.tazkarti.dto.*;
 import com.example.tazkarti.service.ManagerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping({"/managers"})
@@ -36,5 +35,17 @@ public class ManagerController {
         Long managerId = (Long)request.getAttribute("userId");
         managerService.editMatchDetails(managerId,matchId,matchDto);
         return ResponseEntity.ok(new GeneralResponseDto("Match updated successfully"));
+    }
+
+    @GetMapping({"/{managerId}/teams"})
+    public ResponseEntity<List<GetTeamDto>> getAllTeams(HttpServletRequest request){
+        Long managerId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(managerService.getAllTeams(managerId));
+    }
+
+    @GetMapping({"/{managerId}/stadiums"})
+    public ResponseEntity<List<GetStadiumDto>> getAllStadiums(HttpServletRequest request){
+        Long managerId = (Long)request.getAttribute("userId");
+        return ResponseEntity.ok(managerService.getStadiums(managerId));
     }
 }
